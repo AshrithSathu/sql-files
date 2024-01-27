@@ -1,0 +1,111 @@
+-- 1. Create Employee table. --
+
+CREATE TABLE Employee(
+EmpNo NUMERIC(5) PRIMARY KEY,
+EmpName VARCHAR(20) NOT NULL,
+Gender CHARACTER(1) NOT NULL CHECK (GENDER = 'M' OR GENDER = 'F'),
+Salary NUMERIC(8) NOT NULL,
+Address VARCHAR(20) NOT NULL,
+DNo NUMERIC(5));
+
+-- 2. Create Department table. --
+
+CREATE TABLE Department(
+DeptNo NUMERIC(5) PRIMARY KEY,
+DeptName VARCHAR(20) UNIQUE);
+
+-- 3 Make DNo of Employee as foreign key which refers to DeptNo of Department. --
+
+ALTER TABLE Employee ADD CONSTRAINT FK_DNo FOREIGN KEY(DNo) REFERENCES Department(DeptNo);
+
+-- 4 Insert few tuples into Employee and Department which satisfies the above constraints. --
+
+INSERT INTO Department VALUES (1,'Developer');
+INSERT INTO Department VALUES (2,'Sales');
+INSERT INTO Department VALUES (3,'CustomerService');
+
+INSERT INTO Employee VALUES (1,'abc','M',80000,'Mumbai',1);
+INSERT INTO Employee VALUES (2,'def','M',30000,'Manipal',3);
+INSERT INTO Employee VALUES (3,'hijk','M',60000,'Mumbai',2);
+INSERT INTO Employee VALUES (4,'lmnop','F',90000,'Manipal',1);
+
+-- 5 Try to insert few tuples into Employee and Department which violates some of the above constraints. -- 
+-- (Should produce errors) --
+
+INSERT INTO Department VALUES (3,'Accounting');
+INSERT INTO Employee VALUES (5,'Emp5','H',60000,'Manipal',2);
+
+-- 6 Try to modify/delete a tuple which violates a constraint. -- 
+
+DELETE FROM Department WHERE DeptNo = 1;
+
+/* 7. Modify the foreign key constraint of Employee table such that whenever a department
+tuple is deleted, the employees belonging to that department will also be deleted. */
+
+ALTER TABLE Employee DROP CONSTRAINT FK_DNo;
+ALTER TABLE Employee ADD CONSTRAINT FK_DNo FOREIGN KEY(DNo) REFERENCES EDepartment(DeptNo) ON DELETE CASCADE;
+
+/* 8 Create a constraint to set the default salary to 10000 and test the constraint by
+ inserting a new record. */
+
+ALTER TABLE Employee MODIFY(SALARY DEFAULT 10000);
+INSERT INTO Employee VALUES (5,'Emp5','M',DEFAULT,'Manipal',2);
+
+
+
+
+
+
+
+-- 9. List all Students with names and their department names. -- 
+
+SELECT name,dept_name FROM student;
+
+-- 10. List all instructors in CSE department. -- 
+
+SELECT * FROM instructor WHERE dept_name = 'Comp. Sci.';
+
+-- 11. Find the names of courses in CSE department which have 3 credits. -- 
+
+SELECT * FROM course WHERE dept_name = 'Comp. Sci.' AND credits = 3;
+
+/* 12. For the student with ID 12345 (or any other value), show all course-id and title of all
+courses registered for by the student. */
++
+SELECT course_id,title FROM course WHERE course_id IN (SELECT course_id FROM takes WHERE ID = 12345);
+
+-- 13. List all the instructors whose salary is in between 40000 and 90000. -- 
+
+SELECT * FROM instructor WHERE salary > 40000 AND salary < 90000;
+
+-- 14. Display the IDs of all instructors who have never taught a course. -- 
+
+SELECT ID FROM instructor WHERE ID NOT IN (SELECT ID FROM teaches);
+
+
+
+
+
+-- 18. Find the names of all instructors whose department name includes the substring ‘ic’. --
+
+SELECT name FROM instructor WHERE dept_name LIKE '%ic%';
+
+-- 19. List the student names along with the length of the student names. --
+
+SELECT name, LENGTH(name) AS length FROM student;
+
+-- 20. List the department names and 3 characters from 3rd position of each department name --
+
+SELECT dept_name, SUBSTR(dept_name,3,3) AS SUBSTRING FROM department;
+
+-- 21. List the instructor names in upper case. --
+
+SELECT UPPER(name) FROM instructor;
+
+-- 22. Replace NULL with value1(say 0) for a column in any of the table --
+
+SELECT ID, NVL(grade,'No-grade') FROM takes WHERE year=2010;
+
+-- 23. Display the salary and salary/3 rounded to nearest hundred from Instructor. --
+
+SELECT salary, ROUND(salary/3,-2) AS salaryby3 FROM instructor;

@@ -1,0 +1,40 @@
+CREATE TABLE STUDENT 
+(
+REG_NO int,
+NAME varchar(25),
+BRANCH char(3),
+SEC char(1),
+CGPA numeric(4,2)
+);
+ INSERT into Student Values(123,'Om','CSE','A',9.76);
+ INSERT into Student Values(reg_no,name,branch,cgpa);
+values(124,'parvati','CSE',9.23);
+------------------------------------------------------------
+
+CREATE TABLE EMPLOYEE
+(
+emp_no INT,
+emp_name VARCHAR(25), 
+emp_address VARCHAR(100)
+);
+------------------------------------------------------------
+INSERT into Employee Values(001,'Adarsh','MANGALORE');
+INSERT into Employee Values(002,'Akash', 'MANIPAL');
+INSERT into Employee Values(003,'Abhinav','PUNE');
+INSERT into Employee Values(004,'Anthony','GOA');
+INSERT into Employee Values(005,'Ashley','DELHI');
+----------------------------------------------------------------
+ SELECT EMP_NAME FROM EMPLOYEE WHERE EMP_ADDRESS='MANIPAL';
+-------------------------------------------------------------------
+Alter table EMPLOYEE add (SALARY INT);
+----------------------------------------------------------------
+Update EMPLOYEE set SALARY=10000;
+------------------------------------------
+DESCRIBE EMPLOYEE
+--------------------------------------------
+Delete from EMPLOYEE where EMP_ADDRESS='MANGALORE';
+-------------------------------------------------
+Rename EMPLOYEE to EMPLOYEE1;
+-------------------------------
+DROP TABLE EMPLOYEE1
+
